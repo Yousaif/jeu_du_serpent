@@ -1,4 +1,5 @@
-svg{
+svg
+{
     width: 300px;
     height: 300px;
     border: 20px solid grey;
@@ -6,12 +7,14 @@ svg{
 
 
 
-main{
+main
+{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.btnJouer{
-    padding: 15PX;
+.btnJouer
+{
+    padding: 15px;
 }
