@@ -35,6 +35,13 @@ document.addEventListener("DOMContentLoaded", function(event)
                 this.pomme = undefined;
             }
 
+            if(this.serpent !== undefined)
+            {
+                this.serpent.supprimeSerpent();
+                this.serpent = undefined;
+
+            }
+
 
         }
 
@@ -65,6 +72,8 @@ document.addEventListener("DOMContentLoaded", function(event)
 
             this.serpentlongueur = 1;
             this.tblCarreSerpent = [];
+
+            this.touche = false;
 
             this.vitesse = 250;
             this.timing = setInterval(this.controleSerpent.bind(this), this.vitesse);
@@ -118,20 +127,65 @@ document.addEventListener("DOMContentLoaded", function(event)
            var nextX = this.currentX + this.nextMoveX;
            var nextY = this.currentY + this.nextMoveY;
 
-           this.dessineCarre(nextX, nextY);
-           this.currentX = nextX;
-           this.currentY = nextY;
+           this.tblCarreSerpent.forEach(function(element)
+            {
+              if(nextX === element[1] && nextY === element[2])
+              {
+                  this.leJeu.finPartie();
+                  this.touche = true;
+
+              }
+            }.bind(this));
+
+           if(nextY < 0 || nextX < 0 || nextY > this.leJeu.grandeurGrille - 1 || nextX > this.leJeu.grandeurGrille - 1) //vérifie les limitess du serpent sir la grille.
+           {
+               console.log("touche limites");
+               this.leJeu.finPartie();
+               this.touche = true;
+
+           }
+
+           if(!this.touche)
+           {
+               if(this.currentX === this.leJeu.pomme.pommeEden[1] && this.currentY === this.leJeu.pomme.pommeEden[2])
+               {
+                   this.serpentlongueur++;
+                   this.leJeu.affichagePointage(this.serpentlongueur);
+                   this.leJeu.pomme.supprimePomme();
+                   this.leJeu.pomme.ajoutePomme();
+
+               }
+               this.dessineCarre(nextX, nextY);
+               this.currentX = nextX;
+               this.currentY = nextY;
+           }
+
+
 
 
         }
 
         dessineCarre(x, y)
         {
+            var unCarre = [this.leJeu.s.rect(x * this.leJeu.grandeurCarre, y * this.leJeu.grandeurCarre, this.leJeu.grandeurCarre, this.leJeu.grandeurCarre), x, y];
+            this.tblCarreSerpent.push(unCarre);
+            if(this.tblCarreSerpent.length > this.serpentlongueur)
+            {
+                this.tblCarreSerpent[0][0].remove();
+                this.tblCarreSerpent.shift();
+
+            }
 
         }
 
         supprimeSerpent()
         {
+            clearInterval(this.timing);
+            while (this.tblCarreSerpent.length > 0)
+            {
+                this.tblCarreSerpent[0][0].remove();
+                this.tblCarreSerpent.shift();
+            }
 
         }
 

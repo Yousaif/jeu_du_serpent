@@ -2,19 +2,38 @@ svg
 {
     width: 300px;
     height: 300px;
-    border: 20px solid grey;
+    border: 20px solid #0b6672;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 2px 2px 10px #000000;
 }
 
-
+body
+{
+    background-image: url("../images/pexels-will-612964.jpg");
+    background-size: cover;
+}
 
 main
 {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+
 }
 
 .btnJouer
 {
     padding: 15px;
+    font-family: 'Special Elite', cursive;
+
+
+
 }
+h1, p
+   {
+    font-family: 'Special Elite', cursive;
+    text-transform: uppercase;
+    color: #fff;
+
+   }
